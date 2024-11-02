@@ -31,7 +31,7 @@ jobs:
         run: ls ./frontend && ls
 
       - name: Sync build to S3
-        run: aws s3 sync ./frontend/build/ s3://fiscalfootprint-fe1 --delete
+        run: aws s3 sync build s3://fiscalfootprint-fe1 --delete
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
