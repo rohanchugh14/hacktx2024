@@ -27,6 +27,9 @@ jobs:
         run: npm run build
         working-directory: ./frontend # change to your actual directory
 
+      - name: ls
+        run: ls ./frontend && ls
+
       # - name: Sync build to S3
       #   run: aws s3 sync ./frontend/build/ s3://fiscalfootprint-fe1 --delete
       #   env:
