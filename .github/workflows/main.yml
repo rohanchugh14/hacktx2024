@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: '20.1.0' # specify your node version
 
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install awscli -y
+          aws --version # Check if installed correctly
+
       - name: Install dependencies
         run: npm install
         working-directory: ./frontend # change to your actual directory where package.json is located
