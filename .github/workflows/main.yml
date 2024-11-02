@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # specify your node version
+          node-version: '20.1.0' # specify your node version
 
       - name: Install dependencies
         run: npm install
@@ -27,7 +27,7 @@ jobs:
         working-directory: ./frontend # change to your actual directory
 
       - name: Sync build to S3
-        run: aws s3 sync build s3://fiscalfootprint-fe1 --profile default
+        run: aws s3 sync build s3://fiscalfootprint-fe1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
