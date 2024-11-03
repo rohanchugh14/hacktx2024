@@ -3,6 +3,8 @@ import "./App.css";
 import axios from "axios";
 import { BarChart } from "@mui/x-charts";
 import PieActiveArc from "./Components/AlexComponent";
+import { Box } from "@mui/material";
+
 function App() {
   // make a request with axios, get request
   useEffect(() => {
@@ -46,8 +48,25 @@ function App() {
     fetchData();
   }, []);
   return (
+    <div style={{ backgroundColor: "black", minHeight: "100vh", color: "white" }}>
       <div className="App">
-        Hi there
+
+        <Box
+          component="img"
+          sx={{
+            height: 233,
+            width: 350,
+            maxHeight: { xs: 233, md: 167 },
+            maxWidth: { xs: 350, md: 250 },
+            position: "absolute",
+            top: 0,               
+            left: 0,
+            paddingTop: "20px",
+          }}
+          alt="Logo No Working"
+          src= '/logo.svg'
+        />
+
         <PieActiveArc />
         <BarChart
           xAxis={[
@@ -66,6 +85,7 @@ function App() {
           height={300}
         />
       </div>
+    </div>
   );
 }
 
