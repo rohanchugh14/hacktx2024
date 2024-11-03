@@ -27,7 +27,7 @@ export type Category = {
   /**
    * Request children categories when this category is clicked.
    */
-  updateCurrentCategories: () => Category[]
+  updateCurrentCategories: () => SpendingData | null
 }
 
 export type SpendingData = {
@@ -42,6 +42,10 @@ export type SpendingData = {
    * and get smaller for each subsequent layer
    */
   total: number
+  /**
+   * Rohan's daddy
+   */
+  parent: Category | null
 }
 
 /**

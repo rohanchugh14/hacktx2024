@@ -45,15 +45,30 @@ function App() {
           type: item.type,
           updateCurrentCategories: () => {
             // TODO: implement this
-            return [];
+            return null
           }
         }
       }));
 
+      categories[0].updateCurrentCategories = () => {
+        const subarr = categories.slice(0, 3)
+            let total = 0;
+            subarr.forEach((item) => {
+              total += item.dollarValue
+            })
+            return {
+              total,
+              categories: subarr,
+              parent: null,
+            }
+      }
+
+
       // add percentage for each item
       setSpendingData({
         categories,
-        total: data.total
+        total: data.total,
+        parent: null
       })
     };
     fetchData();
