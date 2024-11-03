@@ -87,13 +87,6 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
       color: "white",
     }}
   >
-    <h2 style={{
-      fontSize: "2rem", // Adjust font size as needed
-      marginBottom: "20px", // Space between the title and pie chart
-      textAlign: "center", // Center the text
-    }}>
-      Tax Breakdown
-    </h2>
     <IntroPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData} />
     {/* <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/> */}
   </div>

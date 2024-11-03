@@ -77,7 +77,7 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
             sx={{ width: '100%' }}
             >
               <Typography variant="h5">
-                Name: {currentCategory?.label ?? parent.label}
+                Name: {currentCategory?.label ?? parent?.label}
               </Typography>
               <Typography variant="h5">
                 Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent.value * income * 0.01)}

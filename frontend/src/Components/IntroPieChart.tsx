@@ -5,7 +5,7 @@ import { bigFormatter, valueFormatter } from './webUsageStats.ts';
 import { HighlightItemData } from '@mui/x-charts/context';
 import { Stack, Typography } from '@mui/material';
 import { SpendingData, Category, SpendingOptions } from '../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SpendingDataPieChart from './SpendingDataPieChart.tsx';
 import recursiveFetch from '../Hooks/useRecursiveFetch.ts';
 
@@ -92,87 +92,13 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
         parent: null,
         parentValue: null
    }
-  const [currentCategory, setCurrentCategory] = React.useState<Category | null>(data.categories[0]);
-  const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
-  const [showIntro, setShowIntro] = useState<Boolean>(true);
+  useEffect(() => {
+    setSpendingData(data)
+  }, [])
 
 
   return (
-    <> {showIntro ?
-    (<Box display="flex"
-    justifyContent="center"
-    alignItems="center" 
-    width={1000}>
-      <Stack
-      direction={{ xs: 'column', md: 'row' }}
-      alignItems={{ xs: 'flex-start', md: 'center' }}
-      justifyContent="space-between"
-      sx={{ width: '100%' }}
-      >
-        <PieChart
-          colors={[
-            '#003f5c',
-            '#005974',
-            '#037389',
-            '#1f8f9c',
-            '#3dabac',
-            '#5fc7b8',
-            '#86e3c3',
-            '#b0ffcc']}
-          series={[
-            {
-              data: data?.categories ?? [],
-              highlightScope: { fade: 'global', highlight: 'item' },
-              faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-              valueFormatter,
-            },
-          ]}
-          highlightedItem={highlightedItem}
-          onHighlightChange={(highlightedItem: HighlightItemData | null) => {
-            const index = highlightedItem?.dataIndex
-            setCurrentCategory(index != null ? data.categories[index] : data.categories[0])
-            setHighLightedItem(highlightedItem)
-          }}
-          onItemClick={async (event, d) => {
-
-            if(d.dataIndex !== 4) {
-              return
-            }
-            const newData = await data.categories[d.dataIndex].updateCurrentCategories()
-            if(!newData) {
-              return
-            }
-            newData.parent = data
-            newData.parentValue = data.categories[d.dataIndex].value * 0.01
-            setSpendingData(newData)
-            setShowIntro(false)
-          }}
-          height={700}
-          width={600}
-          slotProps={{
-            legend: { hidden: true },
-          }}
-        />
-        <Stack
-            direction={{ xs: 'row', md: 'column' }}
-            alignItems={{ xs: 'flex-start', md: 'left' }}
-            justifyContent="space-between"
-            sx={{ width: '100%' }}
-            >
-              <Typography variant="h6">
-                Name: {currentCategory?.label ?? "No Parent"}
-              </Typography>
-              <Typography variant="h6">
-                Portion of income: {currentCategory?.value ? bigFormatter(currentCategory?.value * income * 0.01) : bigFormatter(0)}
-              </Typography>
-              <Typography variant="h6">
-                Paragraph: 
-              </Typography>
-
-
-          </Stack>
-      </Stack>
-    </Box>) : (<SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={federalTax}/>)}
+    <> <SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={federalTax}/>
     </>
   );
 }
