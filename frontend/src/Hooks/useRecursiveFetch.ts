@@ -16,15 +16,13 @@ const recursiveFetch = async (
   console.log({spendingOptions});
   console.log({rootType});
   const categories: Category[] = [];
-  const deepCopy = JSON.parse(JSON.stringify(spendingOptions));
   const { data } = await axios.post<SpendingResponse>(
     "https://api.usaspending.gov/api/v2/spending/",
-    deepCopy
+    spendingOptions
   );
   // add up all items' amount
   categories.push(
     ...data.results.map((item: CategoryApiResponse) => {
-      const currCopyOfDeepCopy = JSON.parse(JSON.stringify(deepCopy));
       const nextType =
         item.type === "award"
           ? null
@@ -41,10 +39,13 @@ const recursiveFetch = async (
           if (nextType === null) {
             return null;
           }
-          currCopyOfDeepCopy.filters[item.type] = item.id;
           const options: SpendingOptions = {
-              ...currCopyOfDeepCopy,
-            type: nextType as Type,
+              ...spendingOptions,
+              filters: {
+                ...spendingOptions.filters,
+                [item.type]: item.id,
+              },
+              type: nextType as Type,
           };
           console.log({options})
           return recursiveFetch(options, rootType);
