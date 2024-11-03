@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { BarChart } from "@mui/x-charts";
-import PieActiveArc from "./Components/AlexComponent";
+import PieActiveArc from "./Components/pie";
 import { Box } from "@mui/material";
 import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
 
 function App() {
   const [spendingData, setSpendingData] = React.useState<SpendingData | null>(null);
+  const income = 100000
   // make a request with axios, get request
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +81,7 @@ function App() {
         />
         {
           spendingData ? (
-            <PieActiveArc data={spendingData} />
+            <PieActiveArc data={spendingData} income={100000} />
           ) : (
             <div>Loading...</div>
           )
