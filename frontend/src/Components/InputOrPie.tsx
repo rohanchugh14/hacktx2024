@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputField from "./inputField";
 import SpendingDataPieChart from "./SpendingDataPieChart"; 
-import { SpeedDialIcon } from "@mui/material";
+import { Box, SpeedDialIcon } from "@mui/material";
 import { SpendingData } from "../types";
 type Props = {
   spendingData: SpendingData
@@ -23,7 +23,9 @@ const InputOrPie = ({spendingData}: Props) => {
       {showInput ? (
         <InputField onChange={handleInputChange} onSubmit={handleInputSubmit} />
       ) : (
-        <SpendingDataPieChart data={spendingData} income={inputValue?? 0} /> // Pass the input value to PieChart if needed
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", minHeight: "100vh", color: "white" }}>
+            <SpendingDataPieChart data={spendingData} income={inputValue?? 0} />
+        </div>
       )}
     </div>
   );
