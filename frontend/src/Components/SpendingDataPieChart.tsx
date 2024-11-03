@@ -6,6 +6,7 @@ import { HighlightItemData } from '@mui/x-charts/context';
 import { Stack, Typography, Button } from '@mui/material';
 import { SpendingData, Category } from '../types';
 import { useState } from 'react';
+import '../App.css';
 
 type Props = {
   spendingData: SpendingData
@@ -15,8 +16,9 @@ type Props = {
 const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Props)=> {
   const parent = spendingData.categories[0]
   const [currentPercentage, setCurrentPercentage] = useState<number>(1)
-  const [currentCategory, setCurrentCategory] = React.useState<Category | null>(parent);
+  const [currentCategory, setCurrentCategory] = useState<Category | null>(parent);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <Box display="flex"
     justifyContent="center"
@@ -28,7 +30,9 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
       justifyContent="space-between"
       sx={{ width: '100%' }}
       >
+        <div style={{cursor: loading ? 'not-allowed' : 'default'}}>
         <PieChart
+          sx={{cursor: loading ? 'not-allowed' : 'default'}}
           colors={[
             '#003f5c',
             '#005974',
@@ -53,8 +57,11 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
+            if (loading) return
             const index = d.dataIndex
+            setLoading(true)
             let Rohansss = await spendingData.categories[index].updateCurrentCategories()
+            setLoading(false)
             if (Rohansss) { 
               Rohansss.parent = spendingData
               Rohansss.parentValue = spendingData.categories[index].value * 0.01
@@ -62,12 +69,13 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
               setSpendingData(Rohansss)
             }
           }}
-          height={700}
+          height={600}
           width={600}
           slotProps={{
             legend: { hidden: true },
           }}
         />
+        </div>
         <Box 
           width={500}>
           <Stack
@@ -80,7 +88,7 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
                 Name: {currentCategory?.label ?? parent?.label}
               </Typography>
               <Typography variant="h5">
-                Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent.value * income * 0.01)}
+                Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent?.value * income * 0.01)}
               </Typography>
               <Typography variant="h6" align="left" style={{ fontSize: "0.875rem" }} sx={{ paddingBottom: "16px" }}>
                 Description: In 1965, Lyndon B. Johnson signed The Social Security Act into law that laid the foundation for the U.S. social insurance system. Retirees, disabled individuals, and survivors of deceased workers are provided with cash benefits in order to replace a portion of their income. Compensation comes in the form of retirement benefits, disability insurance, and survivor benefits. 

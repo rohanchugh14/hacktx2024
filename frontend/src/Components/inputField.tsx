@@ -20,7 +20,8 @@ const InputField: React.FC<InputFieldProps> = ({ onChange, onSubmit }) => {
   };
 
   return (
-    <FormControl fullWidth sx={{ m: 1 }}>
+    // <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+    <FormControl sx={{ m: 1, width:"20%" }}>
       <InputLabel htmlFor="outlined-adornment-amount" sx={{ color: "white" }}>
         Pre-Tax Income
       </InputLabel>
@@ -65,6 +66,7 @@ const InputField: React.FC<InputFieldProps> = ({ onChange, onSubmit }) => {
         }}
       />
     </FormControl>
+    // </div>
   );
 };
 
