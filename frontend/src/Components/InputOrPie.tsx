@@ -4,10 +4,12 @@ import SpendingDataPieChart from "./SpendingDataPieChart";
 import { SpendingData } from "../types";
 
 type Props = {
-  spendingData: SpendingData;
+  spendingData: SpendingData
+  setSpendingData: (data: SpendingData) => void
+
 };
 
-const InputOrPie = ({ spendingData }: Props) => {
+const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
   const [inputValue, setInputValue] = useState<number | null>(null);
   const [showInput, setShowInput] = useState(true); // State to control input visibility
 
@@ -84,7 +86,7 @@ const InputOrPie = ({ spendingData }: Props) => {
             color: "white",
           }}
         >
-          <SpendingDataPieChart data={spendingData} income={inputValue ?? 0} />
+          <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/>
         </div>
       </div>
     )}

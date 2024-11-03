@@ -9,12 +9,12 @@ import { useState } from 'react';
 import { calcLength } from 'framer-motion';
 
 type Props = {
-  data: SpendingData
+  spendingData: SpendingData
+  setSpendingData: (data: SpendingData) => void
   income: number
 }
-const SpendingDataPieChart = ({data, income=100000}: Props)=> {
-  const parent = data.categories[0]
-  const [currentData, setCurrentData] = React.useState<SpendingData | null>(data);
+const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Props)=> {
+  const parent = spendingData.categories[0]
   const [currentCategory, setCurrentCategory] = React.useState<Category | null>(parent);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
   return (
@@ -40,7 +40,7 @@ const SpendingDataPieChart = ({data, income=100000}: Props)=> {
             '#b0ffcc']}
           series={[
             {
-              data: currentData?.categories ?? data.categories,
+              data: spendingData?.categories ?? [],
               highlightScope: { fade: 'global', highlight: 'item' },
               faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
               valueFormatter,
@@ -49,16 +49,16 @@ const SpendingDataPieChart = ({data, income=100000}: Props)=> {
           highlightedItem={highlightedItem}
           onHighlightChange={(highlightedItem: HighlightItemData | null) => {
             const index = highlightedItem?.dataIndex
-            setCurrentCategory(index? data.categories[index] : null)
+            setCurrentCategory(index ? spendingData.categories[index] : null)
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
             const index = d.dataIndex
-            let Rohansss = await data.categories[index].updateCurrentCategories()
-            console.log(Rohansss)
+            let Rohansss = await spendingData.categories[index].updateCurrentCategories()
+            console.log({Rohansss})
             if (Rohansss) { 
-              Rohansss.parent = data.categories[index]
-              setCurrentData(Rohansss)
+              Rohansss.parent = spendingData.categories[index]
+              setSpendingData(Rohansss)
             }
           }}
           height={700}

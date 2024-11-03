@@ -5,6 +5,7 @@ import { BarChart } from "@mui/x-charts";
 import { Box } from "@mui/material";
 import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
 import InputOrPie from "./Components/InputOrPie";
+import recursiveFetch from "./Hooks/useRecursiveFetch";
 function App() {
   const [spendingData, setSpendingData] = React.useState<SpendingData | null>(null);
   // make a request with axios, get request
@@ -31,45 +32,28 @@ function App() {
           period: "11",
         },
       }
-      const { data } = await axios.post<SpendingResponse>(
-        "https://api.usaspending.gov/api/v2/spending/",
-        body
-      );
-      // add up all items' amount
-      categories.push(...data.results.map((item: CategoryApiResponse) => {
-        return {
-          label: item.name,
-          value: (item.amount / data.total) * 100.0,
-          id: item.id,
-          dollarValue: item.amount,
-          type: item.type,
-          updateCurrentCategories: () => {
-            // TODO: implement this
-            return null
-          }
-        }
-      }));
-
-      categories[0].updateCurrentCategories = () => {
-        const subarr = categories.slice(0, 3)
-            let total = 0;
-            subarr.forEach((item) => {
-              total += item.dollarValue
-            })
-            return {
-              total,
-              categories: subarr,
-              parent: null,
-            }
-      }
-
+      // const { data } = await axios.post<SpendingResponse>(
+      //   "https://api.usaspending.gov/api/v2/spending/",
+      //   body
+      // );
+      // // add up all items' amount
+      // categories.push(...data.results.map((item: CategoryApiResponse) => {
+      //   return {
+      //     label: item.name,
+      //     value: (item.amount / data.total) * 100.0,
+      //     id: item.id,
+      //     dollarValue: item.amount,
+      //     type: item.type,
+      //     updateCurrentCategories: () => {
+      //       // TODO: implement this
+      //       return null
+      //     }
+      //   }
+      // }));
 
       // add percentage for each item
-      setSpendingData({
-        categories,
-        total: data.total,
-        parent: null
-      })
+      const data = await recursiveFetch(body, "budget_function");
+      setSpendingData(data)
     };
     fetchData();
   }, []);
@@ -95,7 +79,7 @@ function App() {
         />
 
         {/* displays the input feild then after input displays pie chart */}
-        {spendingData && <InputOrPie spendingData={spendingData} /> }
+        {spendingData && <InputOrPie spendingData={spendingData} setSpendingData={setSpendingData}/> }
 
       </div>
     </div>

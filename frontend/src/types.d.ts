@@ -1,4 +1,4 @@
-export const Type = "budget_function" | "agency" | "object_class";
+export type Type = "budget_function" | "agency" | "object_class" | "budget_subfunction" | "federal_account" | "recipient" | "award" | "program_activity";
 /**
  * Represents a category.
  */
@@ -27,7 +27,7 @@ export type Category = {
   /**
    * Request children categories when this category is clicked.
    */
-  updateCurrentCategories: () => SpendingData | null
+  updateCurrentCategories: () => Promise<SpendingData> | null
 }
 
 export type SpendingData = {
@@ -62,7 +62,7 @@ export type SpendingOptions = {
      * Period as a number from 0 through 11.
      */
     period: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11"
-  }
+  } & { [key in Type]?: string }
 }
 
 export type CategoryApiResponse = {
