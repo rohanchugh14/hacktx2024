@@ -11,7 +11,7 @@ type Props = {
   data: SpendingData
   income: number
 }
-const PieActiveArc = ({data, income=100000}: Props)=> {
+const SpendingDataPieChart = ({data, income=100000}: Props)=> {
   const parent = data.categories[0]
   const [currentCategory, setCurrentCategory] = React.useState<Category | null>(parent);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
@@ -74,4 +74,4 @@ const PieActiveArc = ({data, income=100000}: Props)=> {
   );
 }
 
-export default PieActiveArc
+export default SpendingDataPieChart

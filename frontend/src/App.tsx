@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { BarChart } from "@mui/x-charts";
-import PieActiveArc from "./Components/pie";
+import SpendingDataPieChart from "./Components/SpendingDataPieChart";
 import { Box } from "@mui/material";
 import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
 
@@ -81,7 +81,7 @@ function App() {
         />
         {
           spendingData ? (
-            <PieActiveArc data={spendingData} income={100000} />
+            <SpendingDataPieChart data={spendingData} income={100000} />
           ) : (
             <div>Loading...</div>
           )
