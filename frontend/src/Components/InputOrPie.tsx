@@ -95,14 +95,6 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
         </>
       ) : (
         <div>
-          {/* <h2
-            style={{
-              fontSize: "2rem",
-              fontFamily: "Lacquer",
-            }}
-          >
-            Fiscal Footprint
-          </h2> */}
           <div
             style={{
               display: "flex",
@@ -110,7 +102,6 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "#2C2C2C",
-              // minHeight: "100vh",
               color: "white",
             }}
           >
@@ -119,7 +110,6 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
               income={inputValue ?? 0}
               setSpendingData={setSpendingData}
             />
-            {/* <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/> */}
           </div>
         </div>
       )}
