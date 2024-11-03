@@ -130,7 +130,7 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
           highlightedItem={highlightedItem}
           onHighlightChange={(highlightedItem: HighlightItemData | null) => {
             const index = highlightedItem?.dataIndex
-            setCurrentCategory(index != null ? data.categories[index] : null)
+            setCurrentCategory(index != null ? data.categories[index] : data.categories[0])
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
