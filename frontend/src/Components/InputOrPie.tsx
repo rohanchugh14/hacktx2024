@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputField from "./inputField";
 import SpendingDataPieChart from "./SpendingDataPieChart"; 
 import { SpendingData } from "../types";
+import IntroPieChart from "./IntroPieChart";
 
 type Props = {
   spendingData: SpendingData
@@ -86,7 +87,8 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
             color: "white",
           }}
         >
-          <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/>
+          <IntroPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/>
+          {/* <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/> */}
         </div>
       </div>
     )}

@@ -6,16 +6,16 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 
 interface InputFieldProps {
   onChange: (value: number) => void;
-  onSubmit: (value: number) => void; // Pass the value on submit
+  onSubmit: (value: number) => void;
 }
 
 const InputField: React.FC<InputFieldProps> = ({ onChange, onSubmit }) => {
-  const [value, setValue] = useState<number>(0); // Local state for input value
+  const [value, setValue] = useState<number>(0);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSubmit(value); // Call onSubmit with the current value
-      setValue(0); // Clear the input after submission
+      onSubmit(value); 
+      setValue(0); 
     }
   };
 
@@ -32,17 +32,17 @@ const InputField: React.FC<InputFieldProps> = ({ onChange, onSubmit }) => {
           </InputAdornment>
         }
         label="Pre-Tax Income"
-        value={value} // Bind the input value to the state
+        value={value}
         onChange={(e) => {
           const num = parseFloat(e.target.value);
           if (isNaN(num)) {
             setValue(0);
             return;
-          } // Prevent non-numeric input
-          setValue(num); // Update local state
-          onChange(num); // Notify parent component of change
+          }
+          setValue(num);
+          onChange(num);
         }}
-        onKeyDown={handleKeyDown} // Use the handleKeyDown for submission
+        onKeyDown={handleKeyDown}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "white",
