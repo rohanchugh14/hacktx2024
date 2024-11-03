@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import { BarChart } from '@mui/x-charts';
 function App() {
 // make a request with axios, get request
   useEffect(() => {
@@ -15,6 +16,22 @@ function App() {
   return (
     <div className="App">
       Hi there
+      <BarChart
+        xAxis={[
+          {
+            id: 'barCategories',
+            data: ['bar A', 'bar B', 'bar C'],
+            scaleType: 'band',
+          },
+        ]}
+        series={[
+          {
+            data: [2, 5, 3],
+          },
+        ]}
+        width={500}
+        height={300}
+    />
     </div>
   );
 }
