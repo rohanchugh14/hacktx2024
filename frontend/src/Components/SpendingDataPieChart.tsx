@@ -3,10 +3,9 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
 import { valueFormatter, bigFormatter } from './webUsageStats.ts';
 import { HighlightItemData } from '@mui/x-charts/context';
-import { Stack, Typography, colors } from '@mui/material';
+import { Stack, Typography, Button } from '@mui/material';
 import { SpendingData, Category } from '../types';
 import { useState } from 'react';
-import { calcLength } from 'framer-motion';
 
 type Props = {
   spendingData: SpendingData
@@ -15,6 +14,7 @@ type Props = {
 }
 const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Props)=> {
   const parent = spendingData.categories[0]
+  const [currentPercentage, setCurrentPercentage] = useState<number>(1)
   const [currentCategory, setCurrentCategory] = React.useState<Category | null>(parent);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
   return (
@@ -57,7 +57,9 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
             let Rohansss = await spendingData.categories[index].updateCurrentCategories()
             console.log({Rohansss})
             if (Rohansss) { 
-              Rohansss.parent = spendingData.categories[index]
+              Rohansss.parent = spendingData
+              Rohansss.parentValue = spendingData.categories[index].value * 0.01
+              setCurrentPercentage(currentPercentage * spendingData.categories[index].value * 0.01)
               setSpendingData(Rohansss)
             }
           }}
@@ -79,11 +81,19 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
                 Name: {currentCategory?.label ?? parent.label}
               </Typography>
               <Typography variant="h6">
-                Portion of income: {currentCategory?.value ? bigFormatter(currentCategory?.value * income * 0.01) : bigFormatter(parent.value * income * 0.01)}
+                Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent.value * income * 0.01)}
               </Typography>
               <Typography variant="h6">
                 Paragraph: 
               </Typography>
+              {spendingData.parent && (<Button variant="outlined" color="error"
+                onClick={() => {
+                  setSpendingData(spendingData.parent ?? spendingData)
+                  setCurrentPercentage(currentPercentage / (spendingData?.parentValue ?? 1))
+                }}
+              >
+                Back
+              </Button>)}
 
           </Stack>
         </Box>

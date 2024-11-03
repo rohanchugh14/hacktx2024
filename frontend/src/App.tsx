@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import axios from "axios";
-import { BarChart } from "@mui/x-charts";
 import { Box } from "@mui/material";
-import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
+import { Category, SpendingData, SpendingOptions } from "./types";
 import InputOrPie from "./Components/InputOrPie";
 import recursiveFetch from "./Hooks/useRecursiveFetch";
 function App() {
@@ -11,18 +9,6 @@ function App() {
   // make a request with axios, get request
   useEffect(() => {
     const fetchData = async () => {
-      // const res = (
-      //   await axios.get(
-      //     "https://api.usaspending.gov/api/v2/references/toptier_agencies/?sort=percentage_of_total_budget_authority&order=desc"
-      //   )
-      // ).data.results;
-      // console.log(res);
-      // const awardInfo = (
-      //   await axios.get(
-      //     `https://api.usaspending.gov/api/v2/agency/${res[0].toptier_code}/budgetary_resources/`
-      //   )
-      // ).data;
-      // console.log(awardInfo);
       // // make a post request with axios
       const categories: Category[] = [];
       const body: SpendingOptions = {
@@ -32,24 +18,6 @@ function App() {
           period: "11",
         },
       }
-      // const { data } = await axios.post<SpendingResponse>(
-      //   "https://api.usaspending.gov/api/v2/spending/",
-      //   body
-      // );
-      // // add up all items' amount
-      // categories.push(...data.results.map((item: CategoryApiResponse) => {
-      //   return {
-      //     label: item.name,
-      //     value: (item.amount / data.total) * 100.0,
-      //     id: item.id,
-      //     dollarValue: item.amount,
-      //     type: item.type,
-      //     updateCurrentCategories: () => {
-      //       // TODO: implement this
-      //       return null
-      //     }
-      //   }
-      // }));
 
       // add percentage for each item
       const data = await recursiveFetch(body, "budget_function");

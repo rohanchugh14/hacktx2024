@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputField from "./inputField";
-import SpendingDataPieChart from "./SpendingDataPieChart"; 
 import { SpendingData } from "../types";
 import IntroPieChart from "./IntroPieChart";
 

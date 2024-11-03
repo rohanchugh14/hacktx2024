@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
-import { valueFormatter, bigFormatter } from './webUsageStats.ts';
+import { valueFormatter } from './webUsageStats.ts';
 import { HighlightItemData } from '@mui/x-charts/context';
-import { Stack, Typography, colors } from '@mui/material';
-import { SpendingData, Category } from '../types';
+import { Stack } from '@mui/material';
+import { SpendingData, Category, SpendingOptions } from '../types';
 import { useState } from 'react';
-import { calcLength } from 'framer-motion';
+import SpendingDataPieChart from './SpendingDataPieChart.tsx';
+import recursiveFetch from '../Hooks/useRecursiveFetch.ts';
 
 type Props = {
   income: number
   spendingData: SpendingData
   setSpendingData: (data: SpendingData) => void
 }
-const IntroPieChart = ( {income=10000}: Props)=> {
+const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> {
     let pretax = income
     pretax = (pretax < 13850) ? 0 : pretax - 13850
     let federalTax = 0
@@ -72,24 +73,33 @@ const IntroPieChart = ( {income=10000}: Props)=> {
    
     const data: SpendingData= {
         categories: [
-            {label: "Social Secruity",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
-            {label: "Medicare",value: 1.45, id: "MM", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
-            {label: "state",value: 0, id: "State", dollarValue: 1, type: "agency", updateCurrentCategories: () => null},
+            {label: "Social Secruity Tax",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
+            {label: "Medicare/Medicaid Tax",value: 1.45, id: "MM", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
+            {label: "State Income Tax",value: 0, id: "State", dollarValue: 1, type: "agency", updateCurrentCategories: () => null},
             {label: "Takehome",value: takehomePercent, id: "TH", dollarValue: 50, type: "agency", updateCurrentCategories: () => null},
-            {label: "federal Tax",value: federalTaxPercent, id: "FT", dollarValue: 1000, type: "agency", updateCurrentCategories: () => null},
+            {label: "Federal Income Tax",value: federalTaxPercent, id: "FT", dollarValue: 1000, type: "agency", updateCurrentCategories: () => {
+              const body: SpendingOptions = {
+                type: "budget_function",
+                filters: {
+                  fy: "2024",
+                  period: "11",
+                },
+              }
+              return recursiveFetch(body, "budget_function")
+            }},
         ],
         total: 0,
         parent: null,
+        parentValue: null
    }
   const [currentCategory, setCurrentCategory] = React.useState<Category | null>(data.categories[0]);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
+  const [showIntro, setShowIntro] = useState<Boolean>(true);
 
-    function setSpendingData(Rohansss: SpendingData) {
-        throw new Error('Function not implemented.');
-    }
 
   return (
-    <Box display="flex"
+    <> {showIntro ?
+    (<Box display="flex"
     justifyContent="center"
     alignItems="center" 
     width={1000}>
@@ -124,13 +134,23 @@ const IntroPieChart = ( {income=10000}: Props)=> {
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
-            const index = d.dataIndex
-            let Rohansss = await data.categories[index].updateCurrentCategories()
-            console.log({Rohansss})
-            if (Rohansss) { 
-              Rohansss.parent = data.categories[index]
-              setSpendingData(Rohansss)
+            // const sd.parent = data
+            // const cp = {
+            //   ...spendingData,
+            //   parent: data,
+            //   parentValue: federalTaxPercent * 0.01
+            // }
+            if(d.dataIndex !== 4) {
+              return
             }
+            const newData = await data.categories[d.dataIndex].updateCurrentCategories()
+            if(!newData) {
+              return
+            }
+            newData.parent = data
+            newData.parentValue = data.categories[d.dataIndex].value * 0.01
+            setSpendingData(newData)
+            setShowIntro(false)
           }}
           height={700}
           width={600}
@@ -139,7 +159,8 @@ const IntroPieChart = ( {income=10000}: Props)=> {
           }}
         />
       </Stack>
-    </Box>
+    </Box>) : (<SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={federalTax}/>)}
+    </>
   );
 }
 

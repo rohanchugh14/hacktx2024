@@ -45,7 +45,11 @@ export type SpendingData = {
   /**
    * Rohan's daddy
    */
-  parent: Category | null
+  parent: SpendingData | null
+  /**
+   * previous percentage for backtracking
+   */
+  parentValue: number | null
 }
 
 /**
