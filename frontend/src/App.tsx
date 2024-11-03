@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { BarChart } from "@mui/x-charts";
-import PieActiveArc from "./Components/pie";
 import { Box } from "@mui/material";
 import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
 import InputOrPie from "./Components/InputOrPie";
-
 function App() {
   const [spendingData, setSpendingData] = React.useState<SpendingData | null>(null);
   // make a request with axios, get request
