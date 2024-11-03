@@ -11,7 +11,7 @@ import recursiveFetch from '../Hooks/useRecursiveFetch.ts';
 
 type Props = {
   income: number
-  spendingData: SpendingData
+  spendingData: SpendingData | null
   setSpendingData: (data: SpendingData) => void
 }
 const IntroPieChart = ( {spendingData, setSpendingData, income}: Props)=> {
@@ -77,10 +77,10 @@ const IntroPieChart = ( {spendingData, setSpendingData, income}: Props)=> {
    
     const data: SpendingData= {
         categories: [
-            {label: "Social Security Tax",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
-            {label: "Medicare/Medicaid Tax",value: 1.45, id: "MM", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
-            {label: "State Income Tax",value: 0, id: "State", dollarValue: 1, type: "agency", updateCurrentCategories: () => null},
-            {label: "Takehome Pay",value: takehomePercent, id: "TH", dollarValue: 50, type: "agency", updateCurrentCategories: () => null},
+            {label: "Social Security Tax",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null, desc: "This is a separate flat percentage tax that goes 100% to Social Security. To learn more about how medicare is broken down, click the federal income tax sector!"},
+            {label: "Medicare/Medicaid Tax",value: 1.45, id: "MM", dollarValue: 100, type: "agency", updateCurrentCategories: () => null, desc: "This is another flat percentage tax like Social Security that goes 100% to medicare and medicaid funds. To learn more about how medicare is broken down, click the federal income tax sector!"},
+            {label: "State Income Tax",value: 0, id: "State", dollarValue: 1, type: "agency", updateCurrentCategories: () => null, desc: ""},
+            {label: "Takehome Pay",value: takehomePercent, id: "TH", dollarValue: 50, type: "agency", updateCurrentCategories: () => null, desc: "This is the remaining funds that you can actually take home after taxes... notice how it is much less that your employers say you make :( Click on the federal Income Tax sector to learn where all the money is going!"},
             {label: "Federal Income Tax",value: federalTaxPercent, id: "FT", dollarValue: 1000, type: "agency", updateCurrentCategories: () => {
               const body: SpendingOptions = {
                 type: "budget_function",
@@ -90,7 +90,7 @@ const IntroPieChart = ( {spendingData, setSpendingData, income}: Props)=> {
                 },
               }
               return recursiveFetch(body, "budget_function")
-            }},
+            }, desc: "This is a progressive tax system where your fill different tax brackets with taxable income and pay based on the bracket. To learn where all this money is going click on this sector of the pie graph!"},
         ],
         total: 0,
         parent: null,
@@ -102,7 +102,8 @@ const IntroPieChart = ( {spendingData, setSpendingData, income}: Props)=> {
 
   console.log(federalTax)
   return (
-    <> <SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={income}/>
+    <> {spendingData ? <SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={income}/>
+    : <></>}
     </>
   );
 }

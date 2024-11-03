@@ -8,25 +8,6 @@ function App() {
   const [spendingData, setSpendingData] = React.useState<SpendingData | null>(
     null
   );
-  // make a request with axios, get request
-  useEffect(() => {
-    const fetchData = async () => {
-      // // make a post request with axios
-      const categories: Category[] = [];
-      const body: SpendingOptions = {
-        type: "budget_function",
-        filters: {
-          fy: "2024",
-          period: "11",
-        },
-      };
-
-      // add percentage for each item
-      const data = await recursiveFetch(body, "budget_function");
-      setSpendingData(data);
-    };
-    fetchData();
-  }, []);
 
   return (
     <div
@@ -43,12 +24,10 @@ function App() {
       }}>
     </div>
       {/* displays the input feild then after input displays pie chart */}
-      {spendingData && (
         <InputOrPie
           spendingData={spendingData}
           setSpendingData={setSpendingData}
         />
-      )}
     </div>
   );
 }

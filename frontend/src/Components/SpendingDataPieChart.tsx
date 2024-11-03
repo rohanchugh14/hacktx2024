@@ -19,6 +19,7 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
   const [currentCategory, setCurrentCategory] = useState<Category | null>(parent);
   const [highlightedItem, setHighLightedItem] = useState<HighlightItemData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  console.log({currentCategory})
   return (
     <Box display="flex"
     justifyContent="center"
@@ -53,7 +54,7 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
           highlightedItem={highlightedItem}
           onHighlightChange={(highlightedItem: HighlightItemData | null) => {
             const index = highlightedItem?.dataIndex
-            setCurrentCategory(index != null ? spendingData.categories[index] : null)
+            setCurrentCategory(index != null ? spendingData.categories[index] : currentCategory)
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
@@ -91,7 +92,7 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
                 Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent?.value * income * 0.01)}
               </Typography>
               <Typography variant="h6" align="left" style={{ fontSize: "0.875rem" }} sx={{ paddingBottom: "16px" }}>
-                Description: In 1965, Lyndon B. Johnson signed The Social Security Act into law that laid the foundation for the U.S. social insurance system. Retirees, disabled individuals, and survivors of deceased workers are provided with cash benefits in order to replace a portion of their income. Compensation comes in the form of retirement benefits, disability insurance, and survivor benefits. 
+                Description: {currentCategory != null ? currentCategory.desc : "Coming soon!"}
               </Typography>
               {spendingData.parent && (<Button variant="outlined" color="error"
                 onClick={() => {

@@ -5,7 +5,7 @@ import IntroPieChart from "./IntroPieChart";
 import { Box } from "@mui/material";
 
 type Props = {
-  spendingData: SpendingData;
+  spendingData: SpendingData | null;
   setSpendingData: (data: SpendingData) => void;
 };
 

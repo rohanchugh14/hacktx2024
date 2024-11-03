@@ -16,6 +16,10 @@ export type Category = {
    */
   id: string
   /**
+   * The category's description.
+   */
+  desc: string | null
+  /**
    * The category's value in a dollar amount.
    */
   dollarValue: number

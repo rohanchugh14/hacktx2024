@@ -35,6 +35,7 @@ const recursiveFetch = async (
           id: item.id,
           dollarValue: item.amount,
           type: item.type,
+          desc: null,
           updateCurrentCategories: () => {
             if (nextType === null) {
               return null;
