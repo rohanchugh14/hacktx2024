@@ -77,14 +77,14 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
             justifyContent="space-between"
             sx={{ width: '100%' }}
             >
-              <Typography variant="h6">
+              <Typography variant="h5">
                 Name: {currentCategory?.label ?? parent.label}
               </Typography>
-              <Typography variant="h6">
+              <Typography variant="h5">
                 Portion of income: {currentCategory?.value ? bigFormatter(currentPercentage * currentCategory?.value * income * 0.01) : bigFormatter(currentPercentage * parent.value * income * 0.01)}
               </Typography>
-              <Typography variant="h6">
-                Paragraph: 
+              <Typography variant="h6" align="left" style={{ fontSize: "0.875rem" }} sx={{ paddingBottom: "16px" }}>
+                Description: In 1965, Lyndon B. Johnson signed The Social Security Act into law that laid the foundation for the U.S. social insurance system. Retirees, disabled individuals, and survivors of deceased workers are provided with cash benefits in order to replace a portion of their income. Compensation comes in the form of retirement benefits, disability insurance, and survivor benefits. 
               </Typography>
               {spendingData.parent && (<Button variant="outlined" color="error"
                 onClick={() => {
