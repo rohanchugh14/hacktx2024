@@ -14,7 +14,8 @@ type Props = {
   spendingData: SpendingData
   setSpendingData: (data: SpendingData) => void
 }
-const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> {
+const IntroPieChart = ( {spendingData, setSpendingData, income}: Props)=> {
+    console.log(income)
     let pretax = income
     pretax = (pretax < 13850) ? 0 : pretax - 13850
     let federalTax = 0
@@ -67,6 +68,9 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
    }
        federalTax += .37 * pretax
        pretax = 0
+
+    console.log(pretax)
+    console.log(federalTax)
     
    const federalTaxPercent = federalTax / income * 100
    const takehomePercent = 100 - 6.2 - 1.45 - 0 - federalTaxPercent
@@ -96,9 +100,9 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
     setSpendingData(data)
   }, [])
 
-
+  console.log(federalTax)
   return (
-    <> <SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={federalTax}/>
+    <> <SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={income}/>
     </>
   );
 }
