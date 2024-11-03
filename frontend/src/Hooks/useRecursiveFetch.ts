@@ -13,8 +13,6 @@ const recursiveFetch = async (
   spendingOptions: SpendingOptions,
   rootType: "budget_function" | "agency" | "object_class"
 ): Promise<SpendingData> => {
-  console.log({spendingOptions});
-  console.log({rootType});
   const categories: Category[] = [];
   const { data } = await axios.post<SpendingResponse>(
     "https://api.usaspending.gov/api/v2/spending/",
@@ -47,7 +45,6 @@ const recursiveFetch = async (
               },
               type: nextType as Type,
           };
-          console.log({options})
           return recursiveFetch(options, rootType);
         },
       };
@@ -58,6 +55,7 @@ const recursiveFetch = async (
     categories,
     total: data.total,
     parent: null,
+    parentValue: null
   };
 };
 export default recursiveFetch;

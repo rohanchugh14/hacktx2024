@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
-import { valueFormatter } from './webUsageStats.ts';
+import { bigFormatter, valueFormatter } from './webUsageStats.ts';
 import { HighlightItemData } from '@mui/x-charts/context';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { SpendingData, Category, SpendingOptions } from '../types';
 import { useState } from 'react';
 import SpendingDataPieChart from './SpendingDataPieChart.tsx';
@@ -73,10 +73,10 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
    
     const data: SpendingData= {
         categories: [
-            {label: "Social Secruity Tax",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
+            {label: "Social Security Tax",value: 6.2, id: "SS", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
             {label: "Medicare/Medicaid Tax",value: 1.45, id: "MM", dollarValue: 100, type: "agency", updateCurrentCategories: () => null},
             {label: "State Income Tax",value: 0, id: "State", dollarValue: 1, type: "agency", updateCurrentCategories: () => null},
-            {label: "Takehome",value: takehomePercent, id: "TH", dollarValue: 50, type: "agency", updateCurrentCategories: () => null},
+            {label: "Takehome Pay",value: takehomePercent, id: "TH", dollarValue: 50, type: "agency", updateCurrentCategories: () => null},
             {label: "Federal Income Tax",value: federalTaxPercent, id: "FT", dollarValue: 1000, type: "agency", updateCurrentCategories: () => {
               const body: SpendingOptions = {
                 type: "budget_function",
@@ -130,16 +130,11 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
           highlightedItem={highlightedItem}
           onHighlightChange={(highlightedItem: HighlightItemData | null) => {
             const index = highlightedItem?.dataIndex
-            setCurrentCategory(index ? data.categories[index] : null)
+            setCurrentCategory(index != null ? data.categories[index] : null)
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
-            // const sd.parent = data
-            // const cp = {
-            //   ...spendingData,
-            //   parent: data,
-            //   parentValue: federalTaxPercent * 0.01
-            // }
+
             if(d.dataIndex !== 4) {
               return
             }
@@ -158,6 +153,24 @@ const IntroPieChart = ( {spendingData, setSpendingData, income=10000}: Props)=> 
             legend: { hidden: true },
           }}
         />
+        <Stack
+            direction={{ xs: 'row', md: 'column' }}
+            alignItems={{ xs: 'flex-start', md: 'left' }}
+            justifyContent="space-between"
+            sx={{ width: '100%' }}
+            >
+              <Typography variant="h6">
+                Name: {currentCategory?.label ?? "No Parent"}
+              </Typography>
+              <Typography variant="h6">
+                Portion of income: {currentCategory?.value ? bigFormatter(currentCategory?.value * income * 0.01) : bigFormatter(0)}
+              </Typography>
+              <Typography variant="h6">
+                Paragraph: 
+              </Typography>
+
+
+          </Stack>
       </Stack>
     </Box>) : (<SpendingDataPieChart spendingData={spendingData} setSpendingData={setSpendingData} income={federalTax}/>)}
     </>

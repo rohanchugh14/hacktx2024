@@ -49,13 +49,12 @@ const SpendingDataPieChart = ({spendingData, setSpendingData, income=100000}: Pr
           highlightedItem={highlightedItem}
           onHighlightChange={(highlightedItem: HighlightItemData | null) => {
             const index = highlightedItem?.dataIndex
-            setCurrentCategory(index ? spendingData.categories[index] : null)
+            setCurrentCategory(index != null ? spendingData.categories[index] : null)
             setHighLightedItem(highlightedItem)
           }}
           onItemClick={async (event, d) => {
             const index = d.dataIndex
             let Rohansss = await spendingData.categories[index].updateCurrentCategories()
-            console.log({Rohansss})
             if (Rohansss) { 
               Rohansss.parent = spendingData
               Rohansss.parentValue = spendingData.categories[index].value * 0.01
