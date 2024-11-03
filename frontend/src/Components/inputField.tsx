@@ -34,8 +34,13 @@ const InputField: React.FC<InputFieldProps> = ({ onChange, onSubmit }) => {
         label="Pre-Tax Income"
         value={value} // Bind the input value to the state
         onChange={(e) => {
-          setValue(parseFloat(e.target.value)); // Update local state
-          onChange(parseFloat(e.target.value)); // Notify parent component of change
+          const num = parseFloat(e.target.value);
+          if (isNaN(num)) {
+            setValue(0);
+            return;
+          } // Prevent non-numeric input
+          setValue(num); // Update local state
+          onChange(num); // Notify parent component of change
         }}
         onKeyDown={handleKeyDown} // Use the handleKeyDown for submission
         sx={{
