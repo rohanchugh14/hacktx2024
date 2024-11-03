@@ -20,15 +20,14 @@ jobs:
           
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
         working-directory: ./frontend # change to your actual directory where package.json is located
 
       - name: Build the project
-        run: npm run build
-        working-directory: ./frontend # change to your actual directory
-
-      - name: ls
-        run: ls ./frontend && ls
+        run: yarn run build
+        working-directory: ./frontend # change to your actual directory\
+        env:
+          CI: "false"
 
       - name: Sync build to S3
         run: aws s3 sync ./frontend/build s3://fiscalfootprint.tech --delete
