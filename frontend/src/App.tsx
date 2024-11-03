@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 import { BarChart } from '@mui/x-charts';
+import PieActiveArc from './Components/AlexComponent';
 function App() {
 // make a request with axios, get request
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
   return (
     <div className="App">
       Hi there
+      <PieActiveArc />
       <BarChart
         xAxis={[
           {

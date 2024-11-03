@@ -1,9 +1,21 @@
-import React from 'react'
+import * as React from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
+import { desktopOS, valueFormatter } from './webUsageStats.ts';
 
-const AlexComponent = () => {
+const PieActiveArc = ()=> {
   return (
-    <div>AlexComponent</div>
-  )
+    <PieChart
+      series={[
+        {
+          data: desktopOS,
+          highlightScope: { fade: 'global', highlight: 'item' },
+          faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+          valueFormatter,
+        },
+      ]}
+      height={200}
+    />
+  );
 }
 
-export default AlexComponent
+export default PieActiveArc
