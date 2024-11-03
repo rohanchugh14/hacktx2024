@@ -4,7 +4,7 @@ import SpendingDataPieChart from "./SpendingDataPieChart";
 import { SpendingData } from "../types";
 
 type Props = {
-  spendingData: SpendingData
+  spendingData: SpendingData;
 };
 
 const InputOrPie = ({ spendingData }: Props) => {
@@ -16,28 +16,64 @@ const InputOrPie = ({ spendingData }: Props) => {
   };
 
   const handleInputSubmit = () => {
-    setShowInput(false); // Hide the input field
+    setShowInput(false); 
   };
 
   return (
-    <div style={{ padding: "20px", color: "white", position: "relative", minHeight: "100vh" }}>
-      {/* Conditional styling for title based on showInput state */}
-      <h2
-        style={{
-          textAlign: showInput ? "center" : "left",
-          fontSize: "2rem",
-          fontFamily: 'Lacquer',
-          position: showInput ? "static" : "absolute",
-          top: showInput ? "auto" : "20px",
-          left: showInput ? "auto" : "-40px",
-        }}
-      >
-        Fiscal Footprint
-      </h2>
-      
+    <div style={{ position: "relative", minHeight: "100vh", color: "white" }}>
+      {showInput && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-400%, -120%) scale(3)",
+          }}
+        >
+          <img
+            src="/feet.gif"
+            alt="Background animation"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
       {showInput ? (
-        <InputField onChange={handleInputChange} onSubmit={handleInputSubmit} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            zIndex: 1, 
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{
+            fontSize: "2rem",
+            fontFamily: "Lacquer",
+            marginBottom: "20px"
+          }}>
+            Fiscal Footprint
+          </h2>
+          <InputField onChange={handleInputChange} onSubmit={handleInputSubmit} />
+        </div>
       ) : (
+        <div>
+        <h2 style={{
+          fontSize: "2rem",
+          fontFamily: "Lacquer",
+          position: "absolute",
+          top: "20px", 
+          left: "-40px", 
+        }}>
+          Fiscal Footprint
+        </h2>
         <div
           style={{
             display: "flex",
@@ -50,10 +86,10 @@ const InputOrPie = ({ spendingData }: Props) => {
         >
           <SpendingDataPieChart data={spendingData} income={inputValue ?? 0} />
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 };
 
 export default InputOrPie;
-
