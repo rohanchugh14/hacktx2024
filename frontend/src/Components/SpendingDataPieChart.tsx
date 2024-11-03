@@ -135,7 +135,7 @@ const SpendingDataPieChart = ({
                 ? currentCategory.desc !== null && currentCategory.desc !== ""
                   ? currentCategory.desc
                   // @ts-ignore
-                  : descriptions[currentCategory.label]
+                  : descriptions[currentCategory.label] ?? "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam mollitia nihil exercitationem amet libero minus eum provident cum illum. Excepturi ipsa facere id in itaque, iusto saepe totam illo blanditiis?"
                 : "Coming soon!"}
             </Typography>
             {spendingData.parent && (
