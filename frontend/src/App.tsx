@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { BarChart } from "@mui/x-charts";
-import SpendingDataPieChart from "./Components/SpendingDataPieChart";
+import PieActiveArc from "./Components/pie";
 import { Box } from "@mui/material";
 import { Category, CategoryApiResponse, SpendingData, SpendingOptions, SpendingResponse } from "./types";
+import InputOrPie from "./Components/InputOrPie";
 
 function App() {
   const [spendingData, setSpendingData] = React.useState<SpendingData | null>(null);
-  const income = 100000
   // make a request with axios, get request
   useEffect(() => {
     const fetchData = async () => {
@@ -67,25 +67,20 @@ function App() {
         <Box
           component="img"
           sx={{
-            height: 70,
+            height: 100,
             width: 350,
             maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
             position: "absolute",
             top: 0,               
-            left: -80,
+            left: -70,
             paddingTop: "20px",
           }}
           alt="Logo No Working"
           src= '/logo.svg'
         />
-        {
-          spendingData ? (
-            <SpendingDataPieChart data={spendingData} income={100000} />
-          ) : (
-            <div>Loading...</div>
-          )
-        }
+                {spendingData && <InputOrPie spendingData={spendingData} /> }
+
       </div>
     </div>
   );
