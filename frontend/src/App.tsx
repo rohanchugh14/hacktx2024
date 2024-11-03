@@ -48,19 +48,19 @@ function App() {
     fetchData();
   }, []);
   return (
-    <div style={{ backgroundColor: "#2C2C2C", minHeight: "100vh", color: "white" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", minHeight: "100vh", color: "white" }}>
       <div className="App">
 
         <Box
           component="img"
           sx={{
-            height: 233,
+            height: 70,
             width: 350,
             maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
             position: "absolute",
             top: 0,               
-            left: 0,
+            left: -80,
             paddingTop: "20px",
           }}
           alt="Logo No Working"
