@@ -3,8 +3,13 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
 import { desktopOS, valueFormatter } from './webUsageStats.ts';
 import { Stack } from '@mui/material';
+import { SpendingData } from '../types';
 
-const PieActiveArc = ()=> {
+type Props = {
+  data: SpendingData
+}
+const PieActiveArc = ({data}: Props)=> {
+  console.log(data)
   return (
     <Box display="flex"
     justifyContent="center"
