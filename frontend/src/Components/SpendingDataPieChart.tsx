@@ -3,7 +3,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import Box from '@mui/material/Box';
 import { valueFormatter, bigFormatter } from './webUsageStats.ts';
 import { HighlightItemData } from '@mui/x-charts/context';
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, colors } from '@mui/material';
 import { SpendingData, Category } from '../types';
 import { useState } from 'react';
 import { calcLength } from 'framer-motion';
@@ -23,13 +23,21 @@ const SpendingDataPieChart = ({data, income=100000}: Props)=> {
     alignItems="center" 
     width={1000}>
       <Stack
-      bgcolor={"yellow"}
       direction={{ xs: 'column', md: 'row' }}
       alignItems={{ xs: 'flex-start', md: 'center' }}
       justifyContent="space-between"
       sx={{ width: '100%' }}
       >
         <PieChart
+          colors={[
+            '#003f5c',
+            '#005974',
+            '#037389',
+            '#1f8f9c',
+            '#3dabac',
+            '#5fc7b8',
+            '#86e3c3',
+            '#b0ffcc']}
           series={[
             {
               data: currentData?.categories ?? data.categories,
@@ -53,14 +61,13 @@ const SpendingDataPieChart = ({data, income=100000}: Props)=> {
               setCurrentData(Rohansss)
             }
           }}
-          height={500}
-          width={400}
+          height={700}
+          width={600}
           slotProps={{
             legend: { hidden: true },
           }}
         />
         <Box 
-          bgcolor={"red"}
           width={500}>
           <Stack
             direction={{ xs: 'row', md: 'column' }}
@@ -68,15 +75,16 @@ const SpendingDataPieChart = ({data, income=100000}: Props)=> {
             justifyContent="space-between"
             sx={{ width: '100%' }}
             >
-            <Typography>
-              Name: {currentCategory?.label ?? parent.label} 
-            </Typography>
-            <Typography>
-              Portion of income: {currentCategory?.value? bigFormatter(currentCategory?.value * income * 0.01) : bigFormatter(parent.value * income * 0.01)} 
-            </Typography>
-            <Typography>
-              Paragraph: 
-            </Typography>
+              <Typography variant="h6">
+                Name: {currentCategory?.label ?? parent.label}
+              </Typography>
+              <Typography variant="h6">
+                Portion of income: {currentCategory?.value ? bigFormatter(currentCategory?.value * income * 0.01) : bigFormatter(parent.value * income * 0.01)}
+              </Typography>
+              <Typography variant="h6">
+                Paragraph: 
+              </Typography>
+
           </Stack>
         </Box>
       </Stack>
