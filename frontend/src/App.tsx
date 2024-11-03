@@ -48,7 +48,7 @@ function App() {
     fetchData();
   }, []);
   return (
-    <div style={{ backgroundColor: "black", minHeight: "100vh", color: "white" }}>
+    <div style={{ backgroundColor: "#2C2C2C", minHeight: "100vh", color: "white" }}>
       <div className="App">
 
         <Box
@@ -68,22 +68,6 @@ function App() {
         />
 
         <PieActiveArc />
-        <BarChart
-          xAxis={[
-            {
-              id: "barCategories",
-              data: ["bar A", "bar B", "bar C"],
-              scaleType: "band",
-            },
-          ]}
-          series={[
-            {
-              data: [2, 5, 3],
-            },
-          ]}
-          width={500}
-          height={300}
-        />
       </div>
     </div>
   );
