@@ -67,32 +67,40 @@ const InputOrPie = ({ spendingData, setSpendingData }: Props) => {
           <InputField onChange={handleInputChange} onSubmit={handleInputSubmit} />
         </div>
       ) : (
-        <div>
-        <h2 style={{
-          fontSize: "2rem",
-          fontFamily: "Lacquer",
-          position: "absolute",
-          top: "20px", 
-          left: "-40px", 
-        }}>
-          Fiscal Footprint
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#2C2C2C",
-            minHeight: "100vh",
-            color: "white",
-          }}
-        >
-          <IntroPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/>
-          {/* <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/> */}
-        </div>
-      </div>
-    )}
+<div>
+  <h2 style={{
+    fontSize: "2rem",
+    fontFamily: "Lacquer",
+    position: "absolute",
+    top: "20px", 
+    left: "-40px", 
+  }}>
+    Fiscal Footprint
+  </h2>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center", 
+      backgroundColor: "#2C2C2C",
+      minHeight: "100vh",
+      color: "white",
+    }}
+  >
+    <h2 style={{
+      fontSize: "2rem", // Adjust font size as needed
+      marginBottom: "20px", // Space between the title and pie chart
+      textAlign: "center", // Center the text
+    }}>
+      Tax Breakdown
+    </h2>
+    <IntroPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData} />
+    {/* <SpendingDataPieChart spendingData={spendingData} income={inputValue ?? 0} setSpendingData={setSpendingData}/> */}
   </div>
+</div>
+    )}
+</div>
 );
 };
 
